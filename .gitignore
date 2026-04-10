@@ -1,0 +1,15 @@
+# Secrets — nunca subir
+.env
+*.env
+.env.*
+!.env.example
+
+# Dependencies
+vendor/
+node_modules/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

@@ -1,0 +1,109 @@
+/*
+ * B370 Manager — estilos del admin
+ * Colores de marca:
+ *   --b370-prusiano: #151B2D  (azul oscuro)
+ *   --b370-caramelo: #E2AC70  (acento claro)
+ *   --b370-porcelana: #F9FAF7 (fondo claro)
+ *   --b370-madera:   #C47B5D  (acento cálido)
+ */
+
+:root {
+	--b370-prusiano:  #151B2D;
+	--b370-caramelo:  #E2AC70;
+	--b370-porcelana: #F9FAF7;
+	--b370-madera:    #C47B5D;
+	--b370-border:    #d9dbe0;
+}
+
+.b370-wrap {
+	background: var(--b370-porcelana);
+	padding: 16px 24px 32px;
+	min-height: 100vh;
+}
+
+.b370-wrap h1 {
+	color: var(--b370-prusiano);
+	border-bottom: 3px solid var(--b370-caramelo);
+	padding-bottom: 8px;
+	display: inline-block;
+}
+
+.b370-wrap h2 {
+	color: var(--b370-prusiano);
+	margin-top: 0;
+}
+
+.b370-lead {
+	color: #4b5160;
+	font-size: 14px;
+	max-width: 720px;
+}
+
+.b370-card {
+	background: #ffffff;
+	border: 1px solid var(--b370-border);
+	border-left: 4px solid var(--b370-caramelo);
+	border-radius: 4px;
+	padding: 20px 24px;
+	margin: 20px 0;
+	box-shadow: 0 1px 2px rgba(21, 27, 45, 0.04);
+}
+
+.b370-card form,
+.b370-card .form-table {
+	margin-top: 12px;
+}
+
+.b370-select {
+	min-width: 420px;
+	max-width: 100%;
+	margin: 0 8px;
+	padding: 6px 10px;
+}
+
+.b370-card .button-primary,
+.b370-card button.button-primary {
+	background: var(--b370-prusiano);
+	border-color: var(--b370-prusiano);
+	color: #ffffff;
+	text-shadow: none;
+	box-shadow: none;
+}
+.b370-card .button-primary:hover {
+	background: #0f1320;
+	border-color: #0f1320;
+}
+
+.b370-variations {
+	margin-top: 12px;
+}
+.b370-variations th {
+	background: var(--b370-prusiano);
+	color: #ffffff;
+}
+.b370-variations td code {
+	background: var(--b370-porcelana);
+	padding: 2px 6px;
+	border-radius: 3px;
+}
+
+.b370-next {
+	margin-top: 20px;
+	padding: 12px 16px;
+	background: var(--b370-porcelana);
+	border-left: 3px solid var(--b370-madera);
+	color: var(--b370-prusiano);
+}
+.b370-next a {
+	color: var(--b370-madera);
+	font-weight: 600;
+	text-decoration: none;
+}
+.b370-next a:hover {
+	text-decoration: underline;
+}
+
+/* Mensajes de error propios del plugin */
+.b370-wrap .notice {
+	border-left-color: var(--b370-madera);
+}
