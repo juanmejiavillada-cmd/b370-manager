@@ -1,111 +1,285 @@
-# B370 Manager — Sprint 1
+# B370 Manager
 
-Plugin interno de WordPress para gestionar el catálogo WooCommerce de
-[b370sports.com](https://b370sports.com). Reemplaza el flujo manual de SSH +
-scripts Python + pegar en chat por una UI dentro del admin de WP.
+Plugin interno de WordPress + CLI Python para gestionar el catálogo WooCommerce de
+[b370sports.com](https://b370sports.com).
 
-## Estado actual (Sprint 1)
+Reemplaza el flujo manual de SSH + scripts sueltos + copiar/pegar por una UI dentro
+del admin de WordPress. Beto opera todo sin conocimientos técnicos.
 
-| Módulo                         | Estado           |
-|--------------------------------|------------------|
-| 1. Selector de producto        | ✅ Funcional     |
-| 2. Subida de imágenes          | 🔲 Placeholder   |
-| 3. Importar Quenti (parser)    | ✅ Parser listo y validado contra inventario real |
-| 3. Importar Quenti (UI/subida) | 🔲 Sprint 2      |
-| 4. Configuración variaciones   | 🔲 Sprint 2      |
-| 5. Ejecución masiva            | 🔲 Sprint 3      |
-| Settings (credenciales/precios)| ✅ Funcional     |
+---
 
-## Instalación en b370sports.com
+## Estado actual
 
-1. **Comprimir la carpeta** `b370-manager/` en `b370-manager.zip`.
-2. En el admin de WP → **Plugins → Añadir nuevo → Subir plugin**.
-3. Seleccionar el `.zip` y activar.
-4. Aparece el menú lateral **B370 Manager**.
-5. Ir a **B370 Manager → Configuración** y pegar:
-   - URL de la tienda (por defecto `https://b370sports.com`)
-   - Consumer Key y Consumer Secret (generar en WooCommerce → Ajustes → Avanzado → API REST, con permisos de **Lectura/Escritura**)
-   - Revisar los precios por defecto.
-6. Volver a **B370 Manager → Productos**. Debería listar los productos variables de la tienda en el dropdown.
+| Módulo                          | Estado                                              |
+|---------------------------------|-----------------------------------------------------|
+| CLI Python (lectura)            | ✅ Funcional — ping, list-products, parse-quenti    |
+| 1. Selector de producto (UI)    | ✅ Funcional                                        |
+| 2. Subida de imágenes           | 🔲 Sprint 2                                         |
+| 3. Importar Quenti (parser)     | ✅ Parser validado — 98,8% cobertura                |
+| 3. Importar Quenti (UI)         | 🔲 Sprint 2                                         |
+| 4. Configuración de variaciones | 🔲 Sprint 2                                         |
+| 5. Ejecución masiva             | 🔲 Sprint 3                                         |
+| Configuración (credenciales)    | ✅ Funcional                                        |
 
-## Seguridad — importante
+---
 
-- Las credenciales WooCommerce que Juanjo compartió inicialmente en texto plano (conversación de brief) deben rotarse: **revocar la API key antigua** y generar una nueva desde WooCommerce → Ajustes → Avanzado → API REST.
-- La Consumer Secret se guarda en `wp_options` y se envía por HTTP Basic sobre HTTPS — no queda nunca en el código del plugin.
-- El plugin requiere capability `manage_woocommerce` para acceder a sus pantallas.
-
-## Estructura del plugin
+## Estructura del proyecto
 
 ```
 b370-manager/
-├── b370-manager.php            # Archivo principal: header, constantes, activación, autoloader
-├── includes/
-│   ├── class-admin.php         # Menú + submenús + enqueue + guardado de Settings
-│   ├── class-products.php      # Cliente WC REST API (GET/POST/PUT)
-│   └── class-quenti.php        # Parser del Excel de Quenti (sin dependencia de WP para tests)
+├── .env                        ← credenciales reales (NUNCA a GitHub)
+├── .env.example                ← plantilla — copia y rellena
+├── .gitignore
+├── README.md
+├── scripts/                    ← CLI Python
+│   ├── cli.py                  ← punto de entrada: python cli.py <comando>
+│   ├── wc.py                   ← cliente WooCommerce REST API
+│   ├── quenti.py               ← parser del Excel de Quenti
+│   ├── config.py               ← lee credenciales del .env (NO tocar)
+│   └── requirements.txt
+├── includes/                   ← plugin WordPress (PHP)
+│   ├── class-admin.php
+│   ├── class-products.php
+│   ├── class-quenti.php
+│   ├── class-variations.php
+│   └── class-settings.php
 ├── admin/
 │   ├── views/
-│   │   ├── products.php        # Módulo 1 — dropdown + tabla de variaciones
-│   │   ├── images.php          # Módulo 2 — placeholder
-│   │   ├── quenti.php          # Módulo 3 — placeholder UI
-│   │   └── settings.php        # Formulario de configuración
-│   └── css/
-│       └── b370-admin.css      # Estilos con colores de marca
-├── assets/
-│   └── js/
-│       └── b370-manager.js     # Placeholder JS
-├── tests/
-│   └── test_parser_against_real_xlsx.py  # Validación del parser contra inventario real
-└── README.md
+│   │   ├── products.php
+│   │   ├── images.php
+│   │   ├── quenti.php
+│   │   └── settings.php
+│   └── css/b370-admin.css
+├── assets/js/b370-manager.js
+├── b370-manager.php            ← archivo principal del plugin
+└── tests/
+    └── test_parser_against_real_xlsx.py
 ```
+
+---
+
+## SOP — Configuración inicial (primera vez)
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/juanmejiavillada-cmd/b370-manager.git
+cd b370-manager
+```
+
+### 2. Crear el archivo .env
+
+```bash
+cp .env.example .env
+```
+
+Abrir `.env` y rellenar con las credenciales reales:
+
+| Variable    | Dónde encontrarla                                          |
+|-------------|-------------------------------------------------------------|
+| `WC_URL`    | URL de la tienda: `https://b370sports.com`                 |
+| `WC_CK`     | WooCommerce → Ajustes → Avanzado → API REST → Consumer Key |
+| `WC_CS`     | Mismo lugar → Consumer Secret                              |
+| `SSH_HOST`  | Panel Hostinger → SSH/FTP → Host                           |
+| `SSH_PORT`  | Panel Hostinger → SSH/FTP → Puerto (65002)                 |
+| `SSH_USER`  | Panel Hostinger → SSH/FTP → Usuario                        |
+| `SSH_PATH`  | Ruta al `public_html` en el servidor                       |
+| `XLSX_PATH` | Ruta local al Excel exportado desde Quenti                 |
+
+> **Seguridad:** El `.env` nunca se sube a GitHub. El `.gitignore` ya lo excluye.
+> Si las claves de API fueron compartidas en texto plano (chat, correo), rótalas:
+> WooCommerce → Ajustes → Avanzado → API REST → revocar y crear nueva.
+
+### 3. Instalar dependencias Python
+
+```bash
+pip install -r scripts/requirements.txt
+```
+
+### 4. Verificar conexión
+
+```bash
+cd scripts
+python cli.py ping
+```
+
+Resultado esperado:
+```
+✅ Conexión OK con b370sports.com
+   WC version:    8.x.x
+   WP version:    6.x.x
+   PHP version:   8.x.x
+   Currency:      COP
+```
+
+---
+
+## SOP — Uso del CLI Python
+
+Todos los comandos se ejecutan desde la carpeta `scripts/`:
+
+```bash
+cd scripts
+```
+
+### Verificar conexión
+```bash
+python cli.py ping
+```
+
+### Listar productos variables
+```bash
+python cli.py list-products
+```
+
+### Ver detalle de un producto (con variaciones)
+```bash
+python cli.py product 1234
+```
+
+### Ver tallas configuradas en WooCommerce
+```bash
+python cli.py size-options
+```
+
+### Parsear inventario de Quenti
+```bash
+# Usa la ruta de XLSX_PATH en .env
+python cli.py parse-quenti
+
+# O especificar ruta manualmente
+python cli.py parse-quenti "C:\ruta\al\inventario.xlsx"
+```
+
+### Buscar familias de productos en Quenti
+```bash
+python cli.py family "COLOMBIA"
+python cli.py family "REAL MADRID"
+```
+
+---
+
+## SOP — Instalar el plugin en WordPress
+
+1. Comprimir la carpeta `b370-manager/` → `b370-manager.zip`
+   (excluir `.env`, `.git/`, `scripts/`, `tests/`)
+2. WordPress admin → **Plugins → Añadir nuevo → Subir plugin**
+3. Seleccionar el `.zip` → Instalar → Activar
+4. Aparece el menú **B370 Manager** en el sidebar
+5. Ir a **B370 Manager → Configuración** y pegar:
+   - URL de la tienda
+   - Consumer Key y Consumer Secret (permisos: **Lectura/Escritura**)
+   - Precios por defecto por tipo de calidad
+6. Ir a **B370 Manager → Productos** — debe listar los productos variables
+
+---
+
+## SOP — Flujo completo para subir un producto nuevo
+
+> Este flujo aplica desde Sprint 3. Por ahora los módulos 2-5 están en construcción.
+
+1. **Exportar inventario** desde Quenti → Excel (.xlsx)
+2. En WordPress admin → **B370 Manager → Productos** → seleccionar el producto padre
+3. **Módulo 3:** Subir el Excel de Quenti → revisar la tabla de coincidencias → confirmar
+4. **Módulo 2:** Subir imágenes drag & drop → asignar por tipo (principal + galería)
+5. **Módulo 4:** Configurar variaciones:
+   - ¿Tiene parches? → genera variantes con/sin
+   - Seleccionar tallas disponibles
+   - Confirmar precios por tipo
+   - Revisar el preview
+6. **Módulo 5:** Ejecutar → ver progreso en tiempo real → revisar log ✅/❌
+
+---
+
+## Atributos y precios de WooCommerce
+
+### Tallas
+`XS · S · M · L · XL · 2XL · 3XL · 4XL · 5XL · 6XL`
+
+> ⚠ `XS`, `3XL`, `4XL`, `5XL`, `6XL` aún no existen en WC.
+> El sistema pedirá confirmación antes de crearlas (ya hay productos reales que las usan).
+
+### Tipos de calidad y precios estándar
+
+| Calidad        | Precio COP  |
+|----------------|-------------|
+| Tipo fan       | $80.000     |
+| Tipo original  | $110.000    |
+| 1.1            | $120.000    |
+| Retro          | $80.000     |
+| Buzo AN        | $95.000     |
+| Gabán AN       | $150.000    |
+
+### Acabados
+- **Con parches** / **Sin parches** — aplica solo a Tipo Original y Tipo Jugador
+
+### Galería de imágenes
+Las imágenes adicionales se guardan en la meta key `wavi_value` con formato `"ID1,ID2,ID3"`.
+
+---
 
 ## Parser de Quenti — resultados de validación
 
-Corrido contra `CUENTI INVENTARIO 6 ABRIL.xlsx` (3.025 filas totales):
+Corrido contra `CUENTI INVENTARIO 6 ABRIL.xlsx` (3.025 filas):
 
-| Métrica                                     | Valor |
-|---------------------------------------------|------:|
-| Filas CAMISETA/BUSO parseadas OK            | **1.077** |
-| Rechazadas por talla infantil (`/6..18`)    | 13 (busos de arquero niño — Beto las sube después) |
-| Cobertura sobre camisetas + busos           | **98,8%** |
-| Familias únicas detectadas                  | 233 |
+| Métrica                                  | Valor      |
+|------------------------------------------|:----------:|
+| Filas CAMISETA/BUSO parseadas OK         | **1.077**  |
+| Rechazadas (talla infantil `/6..18`)     | 13         |
+| Cobertura sobre camisetas + busos        | **98,8%**  |
+| Familias únicas detectadas               | 233        |
 
 **Por tipo:** 1.019 camisetas · 58 busos
 **Por calidad:** 295 Version Fan · 289 Tipo Original · 303 1.1 · 190 sin calidad explícita
-**Por acabado:** 1.022 sin parches (implícito) · 55 con parches (explícito)
-**Tallas detectadas:** XS, S, M, L, XL, 2XL, 3XL, 4XL, 5XL, 6XL
 
-### Decisiones del parser (acordadas con Juanjo)
+### Decisiones del parser (no cambiar sin avisar)
 
-1. **`XXL` → `2XL`** (normalización, ya que Quenti usa `2XL` y WooCommerce debe alinearse).
-2. **`3XL`, `4XL`, `5XL`, `6XL`, `XS` NO existen aún** como opciones del atributo Tallas en WC. El Módulo 4 debe crearlas en la primera corrida si se detectan (el test confirma que **sí** se usan en productos reales como `COLOMBIA LOCAL 2026`).
-3. **`RETRO` es parte del nombre base**, NO se extrae como atributo.
-4. **`TIPO ORIGINAL` == "Tipo Jugador"** del brief inicial. Unificados bajo "Tipo Original" (lo que Beto ve en Quenti).
-5. **`CON PARCHES` solo se taggea explícito**; la ausencia → `sin_parches` implícito.
-6. **`FAN` solo (sin "VERSION FAN")** se acepta como `version_fan` — es la forma más común en Quenti (870 filas vs 56 con "VERSION FAN").
-7. **`1,1` (coma decimal colombiana) == `1.1`** — 256 filas usan coma.
-8. **Prefijos aceptados:** `CAMISETA`, `CAMISETA DE`, `CAMISETA DEL`, `BUSO`, `BUSO DE`, `BUSO DEL`.
+1. `XXL` → `2XL`, `XXXL` → `3XL` (normalización)
+2. `TIPO ORIGINAL` == calidad "tipo_original" (no "Tipo Jugador")
+3. `CON PARCHES` se extrae como atributo; ausencia → `sin_parches` implícito
+4. `FAN` solo (sin "VERSION") se acepta — es la forma más común en Quenti
+5. `1,1` (coma colombiana) == `1.1`
+6. `RETRO` queda en el nombre base, NO es atributo
+7. Prefijos válidos: `CAMISETA`, `CAMISETA DE`, `CAMISETA DEL`, `BUSO`, `BUSO DE`, `BUSO DEL`
 
-## Cómo correr el test del parser
-
-El test replica la lógica de `B370_Manager_Quenti::parse_name()` en Python para poder ejecutarse sin servidor WordPress.
+### Correr el test del parser
 
 ```bash
-cd "ACTUALIZACION CATALOGO WOOCOMERCE"
-python b370-manager/tests/test_parser_against_real_xlsx.py
+cd b370-manager
+python tests/test_parser_against_real_xlsx.py
 ```
 
-Requiere `openpyxl` (`pip install openpyxl`) y el archivo `CUENTI INVENTARIO 6 ABRIL.xlsx` en `~/Downloads/`.
+Requiere `openpyxl` y el Excel en la ruta configurada en `XLSX_PATH` del `.env`.
 
-**Cuando Juanjo cambie la lógica en `class-quenti.php`, debe reflejar el cambio en el test Python** — ambos deben mantenerse 1:1. Esto es la "red de seguridad" hasta que haya tests PHP con PHPUnit.
+**Regla:** cuando cambie la lógica en `class-quenti.php`, debe reflejarse también
+en `tests/test_parser_against_real_xlsx.py` — ambos deben mantenerse 1:1.
+
+---
+
+## Colores de marca B370
+
+| Nombre        | Hex       |
+|---------------|-----------|
+| Azul Prusiano | `#151B2D` |
+| Caramelo      | `#E2AC70` |
+| Porcelana     | `#F9FAF7` |
+| Canela        | `#C47B5D` |
+
+---
 
 ## Roadmap
 
-- **Sprint 2:** UI de upload del Excel de Quenti + preview de cruce contra producto padre seleccionado + integrar PhpSpreadsheet como `vendor/` preempaquetado.
-- **Sprint 2:** Módulo 2 — subida de imágenes con drag & drop agrupadas por tipo (fan / original / 1.1).
-- **Sprint 3:** Módulo 4 — formulario de configuración de variaciones + Módulo 5 — ejecución masiva con barra de progreso y botón de deshacer.
+| Sprint | Módulos                                                                 |
+|--------|-------------------------------------------------------------------------|
+| 1      | ✅ CLI Python · Selector de producto · Parser Quenti · Settings         |
+| 2      | Módulo 2 (imágenes drag & drop) · Módulo 3 (UI Excel + preview cruce)  |
+| 3      | Módulo 4 (configurar variaciones) · Módulo 5 (ejecución masiva + log)  |
+| 4      | Pruebas en b370sports.com · ajustes según feedback de Beto              |
 
-## Alcance vigente (prioridad Beto)
+---
 
-- **SÍ gestiona:** camisetas y busos de mayor rotación (~1.090 productos, 233 familias).
-- **NO gestiona (por ahora):** guayos, tenis, balones, banderas, uniformes escolares. Beto los subirá poco a poco más adelante; el parser los ignora pero no falla.
+## Alcance actual
+
+- **Gestiona:** camisetas y busos de mayor rotación (~1.090 productos, 233 familias)
+- **No gestiona por ahora:** guayos, tenis, balones, banderas, uniformes escolares
+  (Beto los sube manualmente; el parser los ignora sin fallar)
