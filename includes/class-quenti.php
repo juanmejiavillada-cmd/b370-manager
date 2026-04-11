@@ -232,39 +232,21 @@ class B370_Manager_Quenti {
 	}
 
 	/**
-	 * Lee un archivo .xlsx usando PhpSpreadsheet si está disponible.
-	 * Si no lo está, devuelve WP_Error con instrucciones.
+	 * Lee un archivo .xlsx usando B370_Xlsx_Reader (lector nativo, sin dependencias).
 	 *
-	 * @return array|WP_Error  Lista de filas asociativas.
+	 * @param string $file_path
+	 * @return array|WP_Error  Lista de filas asociativas (cabecera = primera fila del Excel).
 	 */
 	public static function read_xlsx( $file_path ) {
-		if ( ! class_exists( '\PhpOffice\PhpSpreadsheet\IOFactory' ) ) {
-			if ( class_exists( 'WP_Error' ) ) {
-				return new WP_Error(
-					'b370_missing_phpspreadsheet',
-					'Falta PhpSpreadsheet. Incluye el vendor/ preempaquetado del plugin.'
-				);
+		if ( ! class_exists( 'B370_Xlsx_Reader' ) ) {
+			$reader_file = __DIR__ . '/class-xlsx-reader.php';
+			if ( file_exists( $reader_file ) ) {
+				require_once $reader_file;
 			}
-			return [];
 		}
-		$reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile( $file_path );
-		$reader->setReadDataOnly( true );
-		$spreadsheet = $reader->load( $file_path );
-		$sheet       = $spreadsheet->getActiveSheet();
-		$rows        = $sheet->toArray( null, true, true, false );
-
-		if ( empty( $rows ) ) {
-			return [];
+		if ( ! class_exists( 'B370_Xlsx_Reader' ) ) {
+			return new WP_Error( 'b370_no_reader', 'No se encontró class-xlsx-reader.php.' );
 		}
-		$headers = array_map( 'strval', array_shift( $rows ) );
-		$out     = [];
-		foreach ( $rows as $r ) {
-			$assoc = [];
-			foreach ( $headers as $i => $h ) {
-				$assoc[ $h ] = $r[ $i ] ?? null;
-			}
-			$out[] = $assoc;
-		}
-		return $out;
+		return B370_Xlsx_Reader::read( $file_path );
 	}
 }
