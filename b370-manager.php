@@ -15,7 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'B370_MANAGER_VERSION', '0.1.0' );
+// Cargar PhpSpreadsheet (y cualquier otra dependencia Composer)
+$b370_autoload = plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+if ( file_exists( $b370_autoload ) ) {
+	require_once $b370_autoload;
+}
+unset( $b370_autoload );
+
+define( 'B370_MANAGER_VERSION', '0.2.0' );
 define( 'B370_MANAGER_FILE', __FILE__ );
 define( 'B370_MANAGER_DIR', plugin_dir_path( __FILE__ ) );
 define( 'B370_MANAGER_URL', plugin_dir_url( __FILE__ ) );

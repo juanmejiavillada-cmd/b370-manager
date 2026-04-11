@@ -1,0 +1,13 @@
+{
+    "name": "b370/manager",
+    "description": "Plugin interno WordPress para gestionar el catálogo de B370 Línea Deportiva",
+    "type": "wordpress-plugin",
+    "license": "proprietary",
+    "require": {
+        "phpoffice/phpspreadsheet": "^2.0"
+    },
+    "config": {
+        "vendor-dir": "vendor",
+        "optimize-autoloader": true
+    }
+}

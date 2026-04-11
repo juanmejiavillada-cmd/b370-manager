@@ -4,9 +4,10 @@
 .env.*
 !.env.example
 
-# Dependencies
+# Dependencies (generadas por Composer/npm — no subir)
 vendor/
 node_modules/
+composer.lock
 
 # OS/editor
 .DS_Store
