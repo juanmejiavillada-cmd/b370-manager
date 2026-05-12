@@ -1,88 +1,90 @@
-# B370 Manager — Scripts de gestión WooCommerce
+# B370 Manager — Sistema de gestión WooCommerce con Claude Code
 
-Sistema de automatización para B370 Línea Deportiva (b370sports.com)
+Sistema de automatización para B370 Línea Deportiva (b370sports.com).  
+Permite subir productos, sincronizar inventario Quenti, gestionar imágenes y generar contenido usando Claude Code + MCPs.
+
+## Instalación en PC nuevo
+
+### 1. Clonar el repositorio
+
+```powershell
+git clone https://github.com/juanmejiavillada-cmd/b370-manager.git "C:\Proyectos\b370\PROTOCOLO 1.1 B370\B370-MANAGER"
+cd "C:\Proyectos\b370\PROTOCOLO 1.1 B370\B370-MANAGER"
+```
+
+### 2. Instalar Python 3.14+
+
+Descargar desde [python.org](https://python.org/downloads) — marcar **"Add Python to PATH"** al instalar.
+
+### 3. Crear entorno virtual e instalar dependencias
+
+```powershell
+python -m venv venv
+venv\Scripts\pip install anthropic fastmcp paramiko pandas openpyxl requests python-dotenv scp mcp
+```
+
+### 4. Configurar credenciales
+
+Crear el archivo `.env` en la raíz del proyecto (pedir a Juanjo):
+
+```
+WC_URL=https://b370sports.com
+WC_CK=ck_...
+WC_CS=cs_...
+SSH_HOST=195.35.15.241
+SSH_PORT=65002
+SSH_USER=...
+SSH_PASS=...
+SSH_PATH=/home/u122447978/domains/b370sports.com/public_html
+ANTHROPIC_API_KEY=sk-ant-...
+B370_DRY_RUN=false
+```
+
+### 5. Instalar Claude Code
+
+Descargar desde [claude.ai/code](https://claude.ai/code) e iniciar sesión con la cuenta de Claude.
+
+### 6. Abrir el proyecto
+
+Abrir Claude Code → abrir carpeta `C:\Proyectos\b370\PROTOCOLO 1.1 B370\B370-MANAGER`
+
+---
+
+## Flujo de trabajo (subir un producto)
+
+1. Soltar las fotos en `imagenes/por-renombrar/`
+2. Abrir Claude Code con el proyecto
+3. Escribir en el chat: `NOMBRE DEL PRODUCTO / CALIDAD`
+
+Ejemplo: `BARCELONA LOCAL / TIPO ORIGINAL CON DORSAL`
+
+Claude hace todo automáticamente: renombra imágenes, las sube al servidor, crea el producto en WooCommerce, asigna SKUs desde Quenti.
+
+---
 
 ## Estructura
 
 ```
-b370-manager/
-├── scripts/
-│   ├── b370_crear_variaciones.py   → Crea variaciones + SKU de Quenti
-│   ├── b370_actualizar_stock.py    → Sube inventario real por talla
-│   ├── b370_actualizar_precios.py  → Asigna precios por tipo
-│   ├── b370_imagenes_variaciones.py → Asigna imágenes por color/tipo
-│   └── b370_crear_producto.py      → Crea productos nuevos desde cero
-├── docs/
-│   └── B370_SOP_Productos_Nuevos.docx
-├── data/
-│   └── (Excel de Quenti — no se sube a GitHub)
-├── .env                  ← Credenciales (no se sube a GitHub)
-├── .env.example          ← Plantilla de credenciales
-├── B370-SSH.bat          ← Acceso rápido al servidor SSH
+B370-MANAGER/
+├── .claude/          ← configuración Claude Code (agentes, skills, CLAUDE.md)
+├── b370_mcp/         ← MCP servidor ecommerce (WooCommerce + SSH)
+├── b370_content/     ← MCP servidor contenido (posts, emails, WhatsApp)
+├── imagenes/
+│   ├── por-renombrar/  ← soltar fotos aquí
+│   └── para-subir/     ← fotos procesadas (se genera automáticamente)
+├── data/             ← inventario Quenti (Excel) + calendario deportivo
+├── scripts/          ← scripts de utilidad
+├── .env              ← credenciales (NO está en GitHub)
 └── README.md
 ```
 
-## Instalación
-
-```bash
-pip install requests python-dotenv openpyxl paramiko
-```
-
-## Configuración
-
-1. Copia `.env.example` como `.env`
-2. Rellena las credenciales en `.env`
-3. Agrega el Excel de Quenti en `/data/`
-
-## Uso
-
-### Crear productos nuevos desde cero
-```bash
-python scripts/b370_crear_producto.py
-```
-Edita el array `PRODUCTS` en el script para agregar nuevos productos.
-
-### Crear variaciones con SKU
-```bash
-python scripts/b370_crear_variaciones.py
-```
-
-### Actualizar stock desde Quenti
-```bash
-python scripts/b370_actualizar_stock.py
-```
-
-### Actualizar precios
-```bash
-python scripts/b370_actualizar_precios.py
-```
-
-### Asignar imágenes por color/tipo
-```bash
-python scripts/b370_imagenes_variaciones.py
-```
-
-## Acceso SSH rápido
-
-Doble clic en `B370-SSH.bat` para conectarte al servidor.
-
-## Convención de imágenes
-
-Las fotos deben subirse a WordPress con este formato:
-```
-NOMBRE_PRODUCTO_1.jpg  → imagen principal
-NOMBRE_PRODUCTO_2.jpg  → galería 2
-NOMBRE_PRODUCTO_3.jpg  → galería 3
-...
-```
+---
 
 ## Precios estándar B370
 
-| Tipo | Precio |
+| Calidad | Precio |
 |---|---|
-| Tipo fan | $80.000 |
-| Tipo jugador | $110.000 |
-| 1.1 | $120.000 |
-| Retro | $80.000 |
-| Buzo AN | $95.000 |
-| Gabán AN | $150.000 |
+| Tipo fan | $79.900 |
+| Tipo original | $109.900 |
+| 1.1 | $119.900 |
+| Retro | $79.900 |

@@ -1,6 +1,8 @@
 # Credenciales — NUNCA subir
 .env
 *.env
+.env.*
+!.env.example
 
 # Entorno Python
 venv/
@@ -22,6 +24,13 @@ data/*.csv
 *.log
 *.tmp
 
-# Windows
+# OS/editor
+.DS_Store
 Thumbs.db
 Desktop.ini
+.idea/
+.vscode/
+
+# Dependencies
+vendor/
+node_modules/
