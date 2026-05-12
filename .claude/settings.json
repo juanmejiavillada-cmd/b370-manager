@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(pip:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "mcp__b370_ecommerce__listar_productos",
+      "mcp__b370_ecommerce__consultar_producto",
+      "mcp__b370_ecommerce__consultar_stock",
+      "mcp__b370_ecommerce__buscar_imagenes_wp",
+      "mcp__b370_ecommerce__generar_copy_producto",
+      "mcp__b370_ecommerce__listar_pedidos",
+      "mcp__b370_ecommerce__metricas_ventas_periodo",
+      "mcp__b370_content__generar_post_social",
+      "mcp__b370_content__generar_stories_pack",
+      "mcp__b370_content__generar_email_kampania",
+      "mcp__b370_content__enviar_email_omnisend",
+      "mcp__b370_content__generar_broadcast_whatsapp",
+      "PowerShell(Get-ChildItem *)"
+    ],
+    "deny": []
+  },
+  "mcpServers": {
+    "b370-ecommerce": {
+      "command": "C:\\Proyectos\\b370\\PROTOCOLO 1.1 B370\\B370-MANAGER\\venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Proyectos\\b370\\PROTOCOLO 1.1 B370\\B370-MANAGER\\b370_mcp\\server.py"
+      ]
+    },
+    "b370-content": {
+      "command": "C:\\Proyectos\\b370\\PROTOCOLO 1.1 B370\\B370-MANAGER\\venv\\Scripts\\python.exe",
+      "args": [
+        "C:\\Proyectos\\b370\\PROTOCOLO 1.1 B370\\B370-MANAGER\\b370_content\\server.py"
+      ]
+    }
+  }
+}

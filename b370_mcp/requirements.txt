@@ -1,0 +1,12 @@
+# Dependencias agregadas para el MCP (las demás ya las tienes en tu proyecto)
+# Instalar con: pip install -r mcp/requirements.txt
+
+fastmcp>=0.2.0
+mcp[cli]>=1.0.0
+
+# Para tool generar_copy_producto (opcional)
+anthropic>=0.39.0
+
+# Para importar_excel_quenti (probablemente ya las tienes)
+pandas>=2.0.0
+openpyxl>=3.1.0

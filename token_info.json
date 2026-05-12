@@ -1,0 +1,21 @@
+{
+  "type": "SYSTEM_USER",
+  "app_id": "2314623255711976",
+  "expires_at": 0,
+  "is_valid": true,
+  "permissions_granted": [
+    "read_insights",
+    "pages_show_list",
+    "ads_management",
+    "business_management",
+    "instagram_basic",
+    "instagram_manage_insights",
+    "instagram_content_publish",
+    "whatsapp_business_management",
+    "pages_read_engagement",
+    "pages_manage_posts",
+    "whatsapp_business_messaging",
+    "public_profile"
+  ],
+  "has_ads_management": true
+}

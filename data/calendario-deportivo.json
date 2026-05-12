@@ -1,0 +1,217 @@
+{
+  "descripcion": "Calendario deportivo B370 — Foco Mundial 2026 + Final Liga BetPlay",
+  "prioridad_editorial": [
+    "1. Final Liga BetPlay Apertura 2026 (mayo-junio)",
+    "2. Copa del Mundo 2026 — especialmente Colombia",
+    "3. Eventos secundarios según relevancia para el catálogo"
+  ],
+  "fases_estrategicas": {
+    "fase_1": {
+      "nombre": "Pre-final Liga BetPlay",
+      "periodo": "2026-05-05 / 2026-05-29",
+      "foco": "Construir hype de Liga colombiana. Si Nacional o Medellín clasifican a la final, máxima activación.",
+      "contenido_clave": "Reclasificación, cuadrangulares, hype de equipos del catálogo"
+    },
+    "fase_2": {
+      "nombre": "Final Liga BetPlay + Pre-Mundial",
+      "periodo": "2026-05-30 / 2026-06-10",
+      "foco": "Doble activación: celebrar la final de Liga + arrancar el hype mundialista. Colombia empieza a dominar el feed.",
+      "contenido_clave": "Final Liga, nómina de Colombia al Mundial, contenido de 'ya viene el Mundial'"
+    },
+    "fase_3": {
+      "nombre": "Mundial 2026 — Modo máximo",
+      "periodo": "2026-06-11 / 2026-07-19",
+      "foco": "EL EVENTO DEL AÑO. Todo el contenido gira alrededor del Mundial. Colombia es el eje principal.",
+      "contenido_clave": "Debut Colombia, fase de grupos, eliminación directa, reacciones en tiempo real"
+    }
+  },
+  "equipos_catalogo_b370": [
+    "Atlético Nacional", "Independiente Medellín", "Colombia",
+    "Barcelona", "Real Madrid", "Manchester City", "PSG",
+    "Juventus", "Inter de Milán", "Ajax", "Chelsea",
+    "Arsenal", "Bayern Múnich", "Boca Juniors", "River Plate"
+  ],
+  "eventos": [
+    {
+      "fecha": "2026-05-10",
+      "evento": "Reclasificación Liga BetPlay — inicio cuadrangulares",
+      "equipos": ["Atlético Nacional", "Independiente Medellín"],
+      "relevancia": "alta",
+      "tipo": "liga_colombiana",
+      "fase": "fase_1",
+      "acciones_b370": [
+        "Contenido de '¿quién va a la final?' con camisetas de Nacional y Medellín",
+        "Stories de quiz: ¿qué equipo llega a la final?",
+        "Activar producto: camisetas Nacional Local + Tercera"
+      ]
+    },
+    {
+      "fecha": "2026-05-16",
+      "evento": "Final UEFA Champions League",
+      "equipos": ["TBD"],
+      "ciudad": "Munich",
+      "relevancia": "alta",
+      "tipo": "champions_league",
+      "fase": "fase_1",
+      "acciones_b370": [
+        "Si hay Barcelona, Real Madrid, City, Chelsea, Arsenal o Bayern → post reactivo con la camiseta del equipo",
+        "Story 'nosotros tenemos la camiseta del campeón'"
+      ]
+    },
+    {
+      "fecha": "2026-05-23",
+      "evento": "Semifinales Liga BetPlay",
+      "equipos": ["TBD"],
+      "relevancia": "muy_alta",
+      "tipo": "liga_colombiana",
+      "fase": "fase_1",
+      "acciones_b370": [
+        "Hype de semifinal — contenido emocional de hinchas",
+        "Si Nacional está: activar campaña de camiseta con urgencia"
+      ]
+    },
+    {
+      "fecha": "2026-05-30",
+      "evento": "Final Liga BetPlay Apertura 2026 — IDA",
+      "equipos": ["TBD"],
+      "relevancia": "maxima",
+      "tipo": "liga_colombiana",
+      "fase": "fase_2",
+      "acciones_b370": [
+        "Semana de la final: contenido diario",
+        "Post previo al partido: '¿ya tienes la camiseta para la final?'",
+        "Reacción en tiempo real vía Stories",
+        "Si Nacional o Medellín: campaña de camiseta urgente con CTA claro"
+      ]
+    },
+    {
+      "fecha": "2026-06-03",
+      "evento": "Final Liga BetPlay Apertura 2026 — VUELTA",
+      "equipos": ["TBD"],
+      "relevancia": "maxima",
+      "tipo": "liga_colombiana",
+      "fase": "fase_2",
+      "acciones_b370": [
+        "El día más importante de la fase 1-2",
+        "Story en tiempo real del partido",
+        "Post de celebración o de 'la revancha' si perdemos",
+        "Activar pauta de camiseta del campeón inmediatamente después"
+      ]
+    },
+    {
+      "fecha": "2026-06-06",
+      "evento": "Nómina de Colombia al Mundial — anuncio",
+      "equipos": ["Colombia"],
+      "relevancia": "maxima",
+      "tipo": "mundial",
+      "fase": "fase_2",
+      "acciones_b370": [
+        "Post inmediato con la nómina y las camisetas de Colombia",
+        "Reels: 'la camiseta de los 26 elegidos'",
+        "Activar stock de Colombia local, visitante y tercera"
+      ]
+    },
+    {
+      "fecha": "2026-06-11",
+      "evento": "Copa del Mundo 2026 — Inauguración",
+      "ciudad": "Ciudad de México",
+      "equipos": ["México", "TBD"],
+      "relevancia": "muy_alta",
+      "tipo": "mundial",
+      "fase": "fase_3",
+      "acciones_b370": [
+        "Post de '¡arranca el Mundial!' con camiseta Colombia",
+        "Activar modo mundialista en todas las redes"
+      ]
+    },
+    {
+      "fecha": "2026-06-15",
+      "evento": "Colombia — Debut Copa del Mundo 2026",
+      "equipos": ["Colombia"],
+      "relevancia": "maxima",
+      "tipo": "mundial",
+      "fase": "fase_3",
+      "acciones_b370": [
+        "EL DÍA MÁS IMPORTANTE DEL AÑO PARA B370",
+        "Contenido los 3 días previos: cuenta regresiva",
+        "Día del partido: Stories en tiempo real, post previo al partido",
+        "Post post-partido: reacción inmediata",
+        "Pauta activa esa semana obligatoriamente"
+      ]
+    },
+    {
+      "fecha": "2026-06-20",
+      "evento": "Colombia — Segundo partido Mundial",
+      "equipos": ["Colombia"],
+      "relevancia": "maxima",
+      "tipo": "mundial",
+      "fase": "fase_3",
+      "acciones_b370": [
+        "Si Colombia ganó el debut: hype de 'seguimos' + camiseta",
+        "Contenido de 'vestite de triunfo' previo al partido"
+      ]
+    },
+    {
+      "fecha": "2026-06-25",
+      "evento": "Colombia — Tercer partido fase de grupos",
+      "equipos": ["Colombia"],
+      "relevancia": "maxima",
+      "tipo": "mundial",
+      "fase": "fase_3",
+      "acciones_b370": [
+        "Si Colombia clasifica: activar urgencia máxima de compra",
+        "Contenido de '¡vamos a octavos!'",
+        "Pauta con presupuesto aumentado si hay budget"
+      ]
+    },
+    {
+      "fecha": "2026-07-04",
+      "evento": "Copa del Mundo — Octavos de final",
+      "relevancia": "muy_alta",
+      "tipo": "mundial",
+      "fase": "fase_3",
+      "acciones_b370": [
+        "Si Colombia clasifica: EL PICO DE VENTAS DEL AÑO",
+        "Contenido de cuenta regresiva + urgencia de compra",
+        "Pauta agresiva si el ad está funcionando"
+      ]
+    },
+    {
+      "fecha": "2026-07-19",
+      "evento": "Final Copa del Mundo 2026",
+      "ciudad": "MetLife Stadium, Nueva York",
+      "relevancia": "maxima",
+      "tipo": "mundial",
+      "fase": "fase_3",
+      "acciones_b370": [
+        "Activar camiseta del equipo finalista si está en catálogo",
+        "Contenido de cierre mundialista"
+      ]
+    },
+    {
+      "fecha": "2026-08-29",
+      "evento": "Liga BetPlay 2026-II — Inicio",
+      "equipos": ["Atlético Nacional", "Independiente Medellín"],
+      "relevancia": "alta",
+      "tipo": "liga_colombiana",
+      "acciones_b370": ["Reiniciar ciclo con camisetas de temporada II"]
+    },
+    {
+      "fecha": "2026-12-05",
+      "evento": "Final Liga BetPlay 2026-II",
+      "equipos": ["TBD"],
+      "relevancia": "alta",
+      "tipo": "liga_colombiana",
+      "acciones_b370": [
+        "Final del año + temporada navideña = doble activación",
+        "Camiseta como regalo de Navidad"
+      ]
+    }
+  ],
+  "fechas_comerciales_clave": [
+    {"fecha": "2026-05-10", "nombre": "Día de la Madre Colombia", "relevancia": "alta", "nota": "Camiseta como regalo. Cruzar con inicio cuadrangulares."},
+    {"fecha": "2026-06-21", "nombre": "Día del Padre Colombia", "relevancia": "alta", "nota": "Cae en plena fase de grupos del Mundial. Máxima activación: regalo + fútbol."},
+    {"fecha": "2026-11-13", "nombre": "Viernes Negro Colombia", "relevancia": "maxima", "nota": "El día de mayor volumen del año. Preparar stock 2 semanas antes."},
+    {"fecha": "2026-12-24", "nombre": "Noche Buena / Temporada Navideña", "relevancia": "muy_alta", "nota": "Pico navideño. Último pedido con entrega garantida."}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "product_id": 3141,
+  "variation_ids": {
+    "S": 3142,
+    "M": 3143,
+    "L": 3144,
+    "XL": 3145,
+    "XXL": 3146
+  },
+  "wp_image_ids": {
+    "ARSENAL-RETRO_1.jpg": 3147,
+    "ARSENAL-RETRO_2.jpg": 3148,
+    "ARSENAL-RETRO_3.jpg": 3149,
+    "ARSENAL-RETRO_4.jpg": 3150
+  }
+}

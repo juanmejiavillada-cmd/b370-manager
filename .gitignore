@@ -1,0 +1,27 @@
+# Credenciales — NUNCA subir
+.env
+*.env
+
+# Entorno Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Imágenes (binarios pesados — se manejan localmente)
+imagenes/para-subir/*
+imagenes/por-renombrar/*
+!imagenes/para-subir/.gitkeep
+!imagenes/por-renombrar/.gitkeep
+
+# Datos de inventario
+data/*.xlsx
+data/*.csv
+
+# Logs y temporales
+*.log
+*.tmp
+
+# Windows
+Thumbs.db
+Desktop.ini
